@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.employee.demo.controller;
 
 import java.util.List;
 
@@ -15,15 +15,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.IBusiness.IEmployeeBusiness;
-import com.example.demo.entity.Employee;
-import com.example.demo.vo.EmployeeDetails;
+import com.employee.demo.IBusiness.IEmployeeBusiness;
+import com.employee.demo.entity.Employee;
+import com.employee.demo.vo.EmployeeDetails;
+
+
 
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(allowedHeaders={"*", "*/"}, origins={"*", "*/"})
-public class FirstController {
-	private static final Logger LOGGER = LoggerFactory.getLogger(FirstController.class);
+public class EmployeeController {
+	private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
 @Autowired
 IEmployeeBusiness iEmployeeBusiness;
 

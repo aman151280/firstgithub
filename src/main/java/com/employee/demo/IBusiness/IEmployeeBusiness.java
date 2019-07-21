@@ -1,9 +1,11 @@
-package com.example.demo.IBusiness;
+package com.employee.demo.IBusiness;
 
 import java.util.List;
 
-import com.example.demo.entity.Employee;
-import com.example.demo.vo.EmployeeDetails;
+import com.employee.demo.entity.Employee;
+import com.employee.demo.vo.EmployeeDetails;
+
+
 
 public interface IEmployeeBusiness {
 

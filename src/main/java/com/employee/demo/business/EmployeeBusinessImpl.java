@@ -1,4 +1,4 @@
-package com.example.demo.business;
+package com.employee.demo.business;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,10 +8,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.IBusiness.IEmployeeBusiness;
-import com.example.demo.IDao.IEmployeeDomain;
-import com.example.demo.entity.Employee;
-import com.example.demo.vo.EmployeeDetails;
+import com.employee.demo.IBusiness.IEmployeeBusiness;
+import com.employee.demo.IDao.IEmployeeDomain;
+import com.employee.demo.entity.Employee;
+import com.employee.demo.vo.EmployeeDetails;
+
 
 @Service
 public class EmployeeBusinessImpl implements IEmployeeBusiness {

@@ -3,7 +3,6 @@
  */
 package com.example.demo.controller;
 
-import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -22,9 +21,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.example.demo.IBusiness.IEmployeeBusiness;
-import com.example.demo.entity.Employee;
-import com.example.demo.vo.EmployeeDetails;
+import com.employee.demo.IBusiness.IEmployeeBusiness;
+import com.employee.demo.controller.EmployeeController;
+import com.employee.demo.entity.Employee;
+import com.employee.demo.vo.EmployeeDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -33,8 +33,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(FirstController.class)
-public class FirstControllerTest {
+@WebMvcTest(EmployeeController.class)
+public class EmployeeControllerTest {
 
 	@Autowired
 	private MockMvc mvc;
