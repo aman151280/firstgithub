@@ -3,17 +3,24 @@
  */
 package com.example.demo.controller;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.json.JacksonTester;
@@ -21,6 +28,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.example.demo.IBusiness.IEmployeeBusiness;
 import com.example.demo.entity.Employee;
@@ -64,6 +75,7 @@ public class FirstControllerTest {
 		JacksonTester.initFields(this, objectMapper);
 		employeeDetails = new EmployeeDetails();
 		employeeDetails.setUserName("alex");
+		
 	}
 
 	/**
@@ -99,19 +111,39 @@ public class FirstControllerTest {
 	/**
 	 * Test method for
 	 * {@link com.example.demo.controller.FirstController#getAllEmployees()}.
+	 * @throws Exception 
 	 */
 	@Test
-	public void testGetAllEmployees() {
-		//fail("Not yet implemented");
+	public void testGetAllEmployees() throws Exception {
+		List<EmployeeDetails> list = new ArrayList<EmployeeDetails>();
+		EmployeeDetails employeeDetails = new EmployeeDetails();
+		employeeDetails.setUserName("alex");
+		list.add(employeeDetails);
+		when(service.getAllEmployees()).thenReturn(list);
+		MockHttpServletRequestBuilder httpServletRequestBuilder = MockMvcRequestBuilders.get("/api/employees");
+		ResultActions resultActions = mvc.perform(httpServletRequestBuilder.accept(MediaType.APPLICATION_JSON));
+		ResultActions actions = resultActions.andDo(print());
+		ResultActions actions2 = actions.andExpect(status().isOk());
+		ResultActions actions3 = actions2.andExpect(MockMvcResultMatchers.jsonPath("$").exists());
+		actions3.andExpect(MockMvcResultMatchers.jsonPath("$[0].userName",is(employeeDetails.getUserName())));
 	}
 
 	/**
 	 * Test method for
 	 * {@link com.example.demo.controller.FirstController#getEmployeeById(java.lang.Long)}.
+	 * @throws Exception 
 	 */
 	@Test
-	public void testGetEmployeeById() {
-		//fail("Not yet implemented");
+	public void testGetEmployeeById() throws Exception {
+		EmployeeDetails employeeDetails = new EmployeeDetails();
+		employeeDetails.setUserName("alex");
+		when(service.findEmployeeById(Mockito.anyLong())).thenReturn(employeeDetails);
+		MockHttpServletRequestBuilder httpServletRequestBuilder = MockMvcRequestBuilders.get("/api/employees/{id}",1);
+		ResultActions resultActions = mvc.perform(httpServletRequestBuilder.accept(MediaType.APPLICATION_JSON));
+		ResultActions actions = resultActions.andDo(print());
+		ResultActions actions2 = actions.andExpect(status().isOk());
+		ResultActions actions3 = actions2.andExpect(MockMvcResultMatchers.jsonPath("$").exists());
+		actions3.andExpect(MockMvcResultMatchers.jsonPath("$.userName",is(employeeDetails.getUserName())));
 	}
 
 }
