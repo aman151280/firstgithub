@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.employee.demo.controller;
 
 import java.util.List;
 
@@ -19,11 +19,13 @@ import com.employee.demo.IBusiness.IEmployeeBusiness;
 import com.employee.demo.entity.Employee;
 import com.employee.demo.vo.EmployeeDetails;
 
+
+
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(allowedHeaders={"*", "*/"}, origins={"*", "*/"})
-public class FirstController {
-	private static final Logger LOGGER = LoggerFactory.getLogger(FirstController.class);
+public class EmployeeController {
+	private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
 @Autowired
 IEmployeeBusiness iEmployeeBusiness;
 
@@ -34,8 +36,7 @@ IEmployeeBusiness iEmployeeBusiness;
 	}
 
 	
-	@PostMapping(value = "/saveUser", consumes = "application/json",
-            produces = "application/json")
+	@PostMapping(value = "/saveUser")
 	public ResponseEntity<Employee> saveUser(@RequestBody EmployeeDetails employeeDetails) {
 		Employee emp = iEmployeeBusiness.saveUser(employeeDetails);
 		LOGGER.debug("hiiiiiiiiiiiiSuccessiiiiiiiiiiii");

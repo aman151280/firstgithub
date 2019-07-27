@@ -1,4 +1,4 @@
-package com.example.demo.vo;
+package com.employee.demo.vo;
 
 public class EmployeeDetails {
 	private String userName;
