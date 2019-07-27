@@ -34,7 +34,8 @@ IEmployeeBusiness iEmployeeBusiness;
 	}
 
 	
-	@PostMapping(value = "/saveUser")
+	@PostMapping(value = "/saveUser", consumes = "application/json",
+            produces = "application/json")
 	public ResponseEntity<Employee> saveUser(@RequestBody EmployeeDetails employeeDetails) {
 		Employee emp = iEmployeeBusiness.saveUser(employeeDetails);
 		LOGGER.debug("hiiiiiiiiiiiiSuccessiiiiiiiiiiii");
