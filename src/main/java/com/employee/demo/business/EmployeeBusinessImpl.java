@@ -2,7 +2,6 @@ package com.employee.demo.business;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import com.employee.demo.IBusiness.IEmployeeBusiness;
 import com.employee.demo.IDao.IEmployeeDomain;
 import com.employee.demo.entity.Employee;
 import com.employee.demo.vo.EmployeeDetails;
-
 
 @Service
 public class EmployeeBusinessImpl implements IEmployeeBusiness {
@@ -25,7 +23,8 @@ public class EmployeeBusinessImpl implements IEmployeeBusiness {
 
 		Employee employee = new Employee();
 		BeanUtils.copyProperties(emp, employee);
-		return IEmployeeDomain.save(employee);
+		 employee = IEmployeeDomain.save(employee);
+		return employee;
 	}
 
 	@Override
@@ -43,9 +42,9 @@ public class EmployeeBusinessImpl implements IEmployeeBusiness {
 
 	@Override
 	public EmployeeDetails findEmployeeById(Long id) {
-		Optional<Employee> emp = IEmployeeDomain.findById(id);
-			EmployeeDetails details = new EmployeeDetails();
-			BeanUtils.copyProperties(emp.isPresent()?emp.get():null, details);
+		Employee emp = IEmployeeDomain.getOne(id);
+		EmployeeDetails details = new EmployeeDetails();
+		BeanUtils.copyProperties(emp != null ? emp : null, details);
 		return details;
 	}
 
