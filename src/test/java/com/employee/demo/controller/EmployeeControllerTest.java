@@ -1,13 +1,19 @@
 /**
  * 
  */
-package com.example.demo.controller;
+package com.employee.demo.controller;
 
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -22,7 +28,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.employee.demo.IBusiness.IEmployeeBusiness;
-import com.employee.demo.controller.EmployeeController;
 import com.employee.demo.entity.Employee;
 import com.employee.demo.vo.EmployeeDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -84,7 +89,7 @@ public class EmployeeControllerTest {
 	 * 
 	 * @throws Exception
 	 */
-	@Test
+@Test
 	public void testSaveUser() throws Exception {
 		final String employeeDetailsJson = jsonTester.write(employeeDetails).getJson();
 		Employee alex = mock(Employee.class);
@@ -99,10 +104,23 @@ public class EmployeeControllerTest {
 	/**
 	 * Test method for
 	 * {@link com.example.demo.controller.FirstController#getAllEmployees()}.
+	 * @throws Exception 
 	 */
 	@Test
-	public void testGetAllEmployees() {
+	public void testGetAllEmployees() throws Exception {
 		//fail("Not yet implemented");
+		EmployeeDetails alex = new EmployeeDetails();
+		alex.setUserName("alex");
+		 
+		    List<EmployeeDetails> allEmployees = Arrays.asList(alex);
+		 
+		    when(service.getAllEmployees()).thenReturn(allEmployees);
+		 
+		    mvc.perform(get("/api/employees")
+		      .contentType(MediaType.APPLICATION_JSON))
+		      .andExpect(status().isOk())
+		      //.andExpect(jsonPath(jsonPath("$", hasItem(allEmployees).))
+		      .andExpect(jsonPath("$[0].userName", is(alex.getUserName())));
 	}
 
 	/**
